@@ -1,1 +1,1 @@
-# monty_cpp
+# Monty in C++
