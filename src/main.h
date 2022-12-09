@@ -7,14 +7,12 @@
 
 extern unsigned int line_number;
 extern char *buff;
+extern char error[];
 
 typedef struct stack
 {
   int n;
-  struct stack_s *prev;
   struct stack_s *next;
 } stack;
-
-int line_command(char *token);
 
 #endif

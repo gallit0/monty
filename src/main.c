@@ -1,14 +1,33 @@
 #include "main.h"
 
 
+int line_command(char *token)
+{
+  int i = 0;
+
+  if (!(strcmp(token, "push")))
+  {
+    token = strtok(NULL, " ");
+    if (!token)
+    {
+      fprintf(stderr, "L%u: no number after push command\n", line_number);
+      return 0;
+    }
+  }
+  else return 0;
+}
+
+
 unsigned int line_number = 0;
 char *buff = NULL;
+char error[512];
 
 int main(int ac, char **av)
 {
   int isat = 1;
   size_t buffsize = 0;
   FILE *file = NULL;
+  char *token = NULL;
 
   if (ac >= 2)
   {
@@ -21,8 +40,11 @@ int main(int ac, char **av)
   while (getline(&buff, &buffsize, file) >= 0)
   {
       line_number++;
-      char *token = strtok(buff, " ");
-      if(!(line_command(token))) break;
+      token = strtok(buff, " \n");
+      if (*token)
+      {
+        if (!line_command(token)) break;
+      }
       if (isat) write(1, "> ", 2);
   }
   if (buff) free(buff);
@@ -30,15 +52,3 @@ int main(int ac, char **av)
   return (0);
 }
 
-
-int line_command(char *token)
-{
-  if (!(strcmp(token, "push")))
-  {
-    token = strtok(NULL, " ");
-    if (!token) return 0;
-  }
-
-  else return 0;
-  return 1;
-}
