@@ -9,7 +9,7 @@ extern unsigned int line_number;
 extern char *buff;
 extern char error[];
 
-typedef struct stack
+typedef struct stack_s
 {
   int n;
   struct stack_s *next;

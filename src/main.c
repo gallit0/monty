@@ -14,7 +14,11 @@ int line_command(char *token)
       return 0;
     }
   }
-  else return 0;
+  else
+  {
+    fprintf(stderr, "L%u: <%s> command nonexisting\n", line_number, token);
+    return 0;
+  }
 }
 
 
@@ -24,6 +28,7 @@ char error[512];
 
 int main(int ac, char **av)
 {
+  struct stack *head = NULL;
   int isat = 1;
   size_t buffsize = 0;
   FILE *file = NULL;
@@ -41,7 +46,7 @@ int main(int ac, char **av)
   {
       line_number++;
       token = strtok(buff, " \n");
-      if (*token)
+      if (token)
       {
         if (!line_command(token)) break;
       }
