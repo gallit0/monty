@@ -4,15 +4,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 extern unsigned int line_number;
 extern char *buff;
 extern char error[];
 
-typedef struct stack_s
-{
+struct stack {
   int n;
-  struct stack_s *next;
-} stack;
+  struct stack *next;
+};
+
+int push(char *token, struct stack **head);
+
+void garbage_collector(struct stack *head);
 
 #endif

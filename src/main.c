@@ -1,18 +1,28 @@
 #include "main.h"
 
 
-int line_command(char *token)
+int line_command(char *token, struct stack **head)
 {
   int i = 0;
 
   if (!(strcmp(token, "push")))
   {
-    token = strtok(NULL, " ");
+    token = strtok(NULL, " \n");
     if (!token)
     {
       fprintf(stderr, "L%u: no number after push command\n", line_number);
       return 0;
     }
+    for (unsigned int i = 0; token[i]; i++)
+    {
+      if (!isdigit(token[i]))
+      {
+        fprintf(stderr, "L%u: %s is not a number\n", line_number, token);
+        return 0;
+      }
+    }
+    push(token, head);
+    return 1;
   }
   else
   {
@@ -48,10 +58,11 @@ int main(int ac, char **av)
       token = strtok(buff, " \n");
       if (token)
       {
-        if (!line_command(token)) break;
+        if (!line_command(token, &head)) break;
       }
       if (isat) write(1, "> ", 2);
   }
+  garbage_collector(head);
   if (buff) free(buff);
   if (file) fclose(file);
   return (0);
