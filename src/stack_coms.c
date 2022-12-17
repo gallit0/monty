@@ -27,6 +27,12 @@ int pall(struct stack(**head))
   return 1;
 }
 
+int pint(struct stack(**head))
+{
+  if (!*head) puts("NULL");
+  else printf("%i\n", (*head)->n);
+  return 1;
+}
 
 void garbage_collector(struct stack *head)
 {

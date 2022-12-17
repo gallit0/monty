@@ -17,7 +17,7 @@ struct stack {
 
 int push(char *token, struct stack **head);
 int pall(struct stack(**head));
-
+int pint(struct stack(**head));
 void garbage_collector(struct stack *head);
 
 #endif

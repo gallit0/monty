@@ -30,6 +30,11 @@ int line_command(char *buff, struct stack **head)
     pall(head);
     return 1;
   }
+  else if(!strcmp(token, "pint"))
+  {
+    pint(head);
+    return 1;
+  }
   else
   {
     fprintf(stderr, "L%u: <%s> command nonexisting\n", line_number, token);
