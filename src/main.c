@@ -1,10 +1,10 @@
 #include "main.h"
 
 
-int line_command(char *token, struct stack **head)
+int line_command(char *buff, struct stack **head)
 {
   int i = 0;
-
+  char *token = strtok(buff, " \n");
   if (!(strcmp(token, "push")))
   {
     token = strtok(NULL, " \n");
@@ -17,11 +17,17 @@ int line_command(char *token, struct stack **head)
     {
       if (!isdigit(token[i]))
       {
+
         fprintf(stderr, "L%u: %s is not a number\n", line_number, token);
         return 0;
       }
     }
     push(token, head);
+    return 1;
+  }
+  else if (!(strcmp(token, "pall")))
+  {
+    pall(head);
     return 1;
   }
   else
@@ -55,10 +61,10 @@ int main(int ac, char **av)
   while (getline(&buff, &buffsize, file) >= 0)
   {
       line_number++;
-      token = strtok(buff, " \n");
+      token = strtok(strdup(buff), " \n");
       if (token)
       {
-        if (!line_command(token, &head)) break;
+        if (!line_command(buff, &head)) break;
       }
       if (isat) write(1, "> ", 2);
   }
@@ -67,4 +73,3 @@ int main(int ac, char **av)
   if (file) fclose(file);
   return (0);
 }
-
